@@ -1,0 +1,942 @@
+/* Reset y estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Estilos principales - Diseño Minimalista */
+.app {
+  min-height: 100vh;
+  width: 100vw;
+  position: relative;
+  background: #e3f2fd;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Sección de lugares turísticos */
+.places-section {
+  padding: 2rem 0;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.places-title {
+  text-align: center;
+  color: #ffffff;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  margin-bottom: 2rem;
+  font-weight: 700;
+  text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+  background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00, #00ffff);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease-in-out infinite;
+}
+
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+  box-sizing: border-box;
+  position: relative;
+}
+
+
+.main-content h1 {
+  display: none;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.main-content p {
+  display: none;
+}
+
+/* Botón principal con fondo blanco */
+.dialogue-button {
+  background: white;
+  color: #000;
+  border: none;
+  padding: clamp(1rem, 3vw, 1.5rem) clamp(2rem, 4vw, 2.5rem);
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  min-width: 200px;
+  max-width: 90%;
+  position: relative;
+  z-index: 1;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.1),
+    0 8px 40px rgba(0, 0, 0, 0.15);
+  animation: none;
+}
+
+@keyframes buttonGlow {
+  0% {
+    box-shadow: 
+      0 0 30px rgba(0, 255, 255, 0.5),
+      0 0 60px rgba(255, 0, 255, 0.3),
+      inset 0 0 20px rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    box-shadow: 
+      0 0 50px rgba(0, 255, 255, 0.8),
+      0 0 100px rgba(255, 0, 255, 0.5),
+      inset 0 0 30px rgba(255, 255, 255, 0.3);
+  }
+}
+
+.dialogue-button:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.01);
+  background: #f8f8f8;
+  box-shadow: 
+    0 6px 25px rgba(0, 0, 0, 0.15),
+    0 12px 50px rgba(0, 0, 0, 0.2);
+}
+
+.dialogue-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f0f0f0;
+  color: #999;
+}
+
+/* Overlay del diálogo con imagen de fondo */
+.dialogue-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0 0 4rem 0;
+  animation: slideUpFuturistic 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: transparent;
+  cursor: pointer;
+}
+
+.dialogue-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('/background2.png') center/cover no-repeat;
+  z-index: -1;
+  animation: backgroundFadeIn 2s ease-out 1.2s forwards;
+  opacity: 0;
+  filter: blur(8px);
+}
+
+@keyframes backgroundFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.15) translateY(20px);
+    filter: blur(8px) brightness(0.8);
+  }
+  30% {
+    opacity: 0.3;
+    transform: scale(1.08) translateY(10px);
+    filter: blur(4px) brightness(0.9);
+  }
+  60% {
+    opacity: 0.7;
+    transform: scale(1.03) translateY(3px);
+    filter: blur(2px) brightness(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0) brightness(1);
+  }
+}
+
+@keyframes slideUpFuturistic {
+  0% {
+    transform: translateY(100%) scale(0.8);
+    opacity: 0;
+    filter: blur(20px);
+  }
+  50% {
+    transform: translateY(50%) scale(1.1);
+    opacity: 0.7;
+    filter: blur(5px);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* Animación de cierre */
+.dialogue-overlay.closing {
+  animation: slideDownFuturistic 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+}
+
+.dialogue-overlay.closing::before {
+  animation: backgroundFadeOut 0.4s ease-in forwards;
+}
+
+@keyframes backgroundFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0) brightness(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.1) translateY(-10px);
+    filter: blur(4px) brightness(0.7);
+  }
+}
+
+@keyframes slideDownFuturistic {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+  50% {
+    transform: translateY(50%) scale(0.9);
+    opacity: 0.5;
+    filter: blur(10px);
+  }
+  100% {
+    transform: translateY(100%) scale(0.7);
+    opacity: 0;
+    filter: blur(20px);
+  }
+}
+
+/* Contenedor principal del diálogo futurista */
+.dialogue-container {
+  width: 100%;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  cursor: default;
+}
+
+/* Botón de cerrar */
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 48px;
+  height: 48px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+  z-index: 1002;
+}
+
+.close-button:hover {
+  background: #f5f5f5;
+  transform: scale(1.05);
+}
+
+.close-button svg {
+  width: 32px;
+  height: 32px;
+  color: black;
+}
+
+/* Retrato del personaje futurista */
+.character-portrait {
+  position: absolute;
+  right: 2rem;
+  top: -8rem;
+  z-index: 1001;
+  animation: characterSlideInFuturistic 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dialogue-overlay.closing .character-portrait {
+  animation: characterSlideOutFuturistic 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+}
+
+@keyframes characterSlideOutFuturistic {
+  0% {
+    transform: translateX(0) scale(1) rotate(0deg);
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    transform: translateX(200px) scale(0.5) rotate(-180deg);
+    opacity: 0;
+    filter: blur(20px);
+  }
+}
+
+@keyframes characterSlideInFuturistic {
+  0% {
+    transform: translateX(200px) scale(0.5) rotate(180deg);
+    opacity: 0;
+    filter: blur(20px);
+  }
+  50% {
+    transform: translateX(50px) scale(1.2) rotate(90deg);
+    opacity: 0.7;
+    filter: blur(5px);
+  }
+  100% {
+    transform: translateX(0) scale(1) rotate(0deg);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.character-image-large {
+  width: clamp(250px, 30vw, 400px);
+  height: clamp(250px, 30vw, 400px);
+  object-fit: contain;
+  border-radius: 30px;
+  animation: speakingFuturistic 1.2s ease-in-out infinite alternate;
+  box-shadow: 
+    0 0 50px rgba(0, 255, 255, 0.6),
+    0 0 100px rgba(255, 0, 255, 0.4),
+    inset 0 0 30px rgba(255, 255, 255, 0.1);
+  border: 3px solid transparent;
+  background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: exclude;
+}
+
+@keyframes speakingFuturistic {
+  0% {
+    transform: translateY(0px) scale(1) rotate(0deg);
+    filter: brightness(1) hue-rotate(0deg);
+    box-shadow: 
+      0 0 50px rgba(0, 255, 255, 0.6),
+      0 0 100px rgba(255, 0, 255, 0.4),
+      inset 0 0 30px rgba(255, 255, 255, 0.1);
+  }
+  100% {
+    transform: translateY(-10px) scale(1.05) rotate(2deg);
+    filter: brightness(1.2) hue-rotate(20deg);
+    box-shadow: 
+      0 0 80px rgba(0, 255, 255, 0.8),
+      0 0 150px rgba(255, 0, 255, 0.6),
+      inset 0 0 50px rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Caja del diálogo futurista */
+.dialogue-box {
+  background: white;
+  border: none;
+  border-radius: 30px;
+  padding: clamp(2rem, 5vw, 3rem);
+  width: 100%;
+  max-width: min(95vw, 1000px);
+  margin: 0 1rem;
+  position: relative;
+  box-shadow: 
+    0 0 50px rgba(0, 255, 255, 0.3),
+    0 0 100px rgba(255, 0, 255, 0.2),
+    inset 0 0 50px rgba(255, 255, 255, 0.1);
+  animation: dialogueGlow 3s ease-in-out infinite alternate;
+}
+
+.dialogue-overlay.closing .dialogue-box {
+  animation: dialogueCloseFuturistic 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+}
+
+@keyframes dialogueCloseFuturistic {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+    box-shadow: 
+      0 0 50px rgba(0, 255, 255, 0.3),
+      0 0 100px rgba(255, 0, 255, 0.2),
+      inset 0 0 50px rgba(255, 255, 255, 0.1);
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+    filter: blur(15px);
+    box-shadow: 
+      0 0 20px rgba(0, 255, 255, 0.1),
+      0 0 40px rgba(255, 0, 255, 0.05),
+      inset 0 0 20px rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* Borde arcoíris animado como Gemini */
+.dialogue-box::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 34px;
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff8000,
+    #ffff00,
+    #80ff00,
+    #00ff00,
+    #00ff80,
+    #00ffff,
+    #0080ff,
+    #0000ff,
+    #8000ff,
+    #ff00ff,
+    #ff0080,
+    #ff0000
+  );
+  background-size: 300% 300%;
+  animation: rainbowBorder 3s linear infinite;
+  z-index: -1;
+}
+
+.dialogue-box::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border-radius: 31px;
+  background: white;
+  z-index: -1;
+}
+
+@keyframes dialogueGlow {
+  0% {
+    box-shadow: 
+      0 0 50px rgba(0, 255, 255, 0.3),
+      0 0 100px rgba(255, 0, 255, 0.2),
+      inset 0 0 50px rgba(255, 255, 255, 0.1);
+  }
+  100% {
+    box-shadow: 
+      0 0 80px rgba(0, 255, 255, 0.5),
+      0 0 150px rgba(255, 0, 255, 0.3),
+      inset 0 0 80px rgba(255, 255, 255, 0.2);
+  }
+}
+
+@keyframes rainbowBorder {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Contenedor del personaje */
+.character-container {
+  flex-shrink: 0;
+  position: relative;
+  animation: characterBounce 1.2s ease-in-out infinite;
+}
+
+/* Animación del contenedor del personaje */
+@keyframes characterBounce {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  25% {
+    transform: translateY(-1px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+  75% {
+    transform: translateY(-1px);
+  }
+}
+
+.character-image {
+  width: clamp(80px, 15vw, 140px);
+  height: clamp(80px, 15vw, 140px);
+  object-fit: contain;
+  border-radius: 15px;
+  transition: all 0.2s ease;
+  animation: speaking 0.8s ease-in-out infinite alternate;
+}
+
+/* Animación de hablar más realista */
+@keyframes speaking {
+  0% {
+    transform: translateY(0px) scale(1) rotate(0deg);
+    filter: brightness(1) contrast(1);
+  }
+  10% {
+    transform: translateY(-1px) scale(1.01) rotate(0.5deg);
+    filter: brightness(1.02) contrast(1.01);
+  }
+  20% {
+    transform: translateY(-2px) scale(1.02) rotate(-0.3deg);
+    filter: brightness(1.04) contrast(1.02);
+  }
+  30% {
+    transform: translateY(-1px) scale(1.01) rotate(0.2deg);
+    filter: brightness(1.03) contrast(1.01);
+  }
+  40% {
+    transform: translateY(-3px) scale(1.03) rotate(-0.5deg);
+    filter: brightness(1.06) contrast(1.03);
+  }
+  50% {
+    transform: translateY(-2px) scale(1.02) rotate(0.3deg);
+    filter: brightness(1.04) contrast(1.02);
+  }
+  60% {
+    transform: translateY(-1px) scale(1.01) rotate(-0.2deg);
+    filter: brightness(1.02) contrast(1.01);
+  }
+  70% {
+    transform: translateY(-2px) scale(1.02) rotate(0.4deg);
+    filter: brightness(1.05) contrast(1.02);
+  }
+  80% {
+    transform: translateY(-1px) scale(1.01) rotate(-0.1deg);
+    filter: brightness(1.03) contrast(1.01);
+  }
+  90% {
+    transform: translateY(-2px) scale(1.02) rotate(0.2deg);
+    filter: brightness(1.04) contrast(1.02);
+  }
+  100% {
+    transform: translateY(0px) scale(1) rotate(0deg);
+    filter: brightness(1) contrast(1);
+  }
+}
+
+/* Animación adicional de respiración cuando no habla */
+.character-image.idle {
+  animation: breathing 3s ease-in-out infinite;
+}
+
+@keyframes breathing {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.01);
+    filter: brightness(1.02);
+  }
+}
+
+/* Contenedor del nombre del personaje */
+.character-name-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: flex-start;
+}
+
+/* Nombre del personaje futurista */
+.character-name-tag {
+  background: linear-gradient(45deg, #00ffff, #ff00ff);
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 700;
+  display: inline-block;
+  border: none;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 
+    0 0 30px rgba(0, 255, 255, 0.6),
+    0 0 60px rgba(255, 0, 255, 0.4),
+    inset 0 0 20px rgba(255, 255, 255, 0.3);
+  animation: nameGlow 2s ease-in-out infinite alternate;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes nameGlow {
+  0% {
+    box-shadow: 
+      0 0 30px rgba(0, 255, 255, 0.6),
+      0 0 60px rgba(255, 0, 255, 0.4),
+      inset 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  100% {
+    box-shadow: 
+      0 0 50px rgba(0, 255, 255, 0.8),
+      0 0 100px rgba(255, 0, 255, 0.6),
+      inset 0 0 40px rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* Botón de voz como icono al lado del nombre */
+.voice-icon-button {
+  background: none;
+  color: #666;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.voice-icon-button:hover {
+  color: #00ffff;
+  transform: scale(1.1);
+}
+
+.voice-icon-button.playing {
+  color: #ff6b6b;
+  animation: voiceIconPlaying 1s ease-in-out infinite alternate;
+}
+
+.voice-icon-button svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+@keyframes voiceIconPlaying {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.dialogue-text {
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  color: #333333;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  animation: textPulseFuturistic 1s ease-in-out infinite alternate;
+  font-weight: 400;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes textPulseFuturistic {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    opacity: 0.9;
+    transform: scale(1.02);
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+  }
+}
+
+
+/* Contenedor del input futurista */
+.user-input-container {
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.user-input-rounded {
+  width: 100%;
+  padding: 1rem 3.5rem 1rem 1rem;
+  border: 2px solid #ccc;
+  border-radius: 50px;
+  background: white;
+  color: #333;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  transition: all 0.3s ease;
+  outline: none;
+  font-weight: 400;
+  position: relative;
+}
+
+.user-input-rounded:focus {
+  border-color: #00ffff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  transform: scale(1.01);
+}
+
+.user-input-rounded::placeholder {
+  color: #999;
+  font-style: normal;
+}
+
+.user-input-rounded:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.user-input-rounded:disabled::placeholder {
+  color: #ccc;
+}
+
+.microphone-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  color: #666;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.microphone-icon:hover {
+  color: #00ffff;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.microphone-icon.recording {
+  color: #ff6b6b;
+  animation: micRecording 1s ease-in-out infinite alternate;
+}
+
+.microphone-icon.disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.microphone-icon.disabled:hover {
+  color: #ccc;
+  transform: translateY(-50%) scale(1);
+}
+
+.microphone-icon svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+@keyframes micRecording {
+  0% {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50%) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* Indicador de carga */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.8rem;
+  background: rgba(0, 255, 255, 0.1);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(0, 255, 255, 0.3);
+  border-top: 2px solid #00ffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-indicator span {
+  color: #00ffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* Animación sutil del texto */
+@keyframes textPulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.95;
+    transform: scale(1.005);
+  }
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dialogue-overlay {
+    padding: 0 0 3rem 0;
+  }
+  
+  .character-portrait {
+    right: 1rem;
+    top: -5rem;
+  }
+  
+  .character-image-large {
+    width: clamp(150px, 20vw, 200px);
+    height: clamp(150px, 20vw, 200px);
+  }
+  
+  .dialogue-box {
+    margin: 0 0.5rem;
+    padding: 1rem;
+  }
+  
+  .main-content {
+    padding: 1rem;
+  }
+  
+  .main-content h1 {
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+  }
+  
+  .main-content p {
+    font-size: clamp(0.9rem, 3vw, 1.2rem);
+  }
+  
+  .dialogue-button {
+    min-width: 180px;
+    padding: 0.8rem 1.5rem;
+  }
+  
+  .microphone-icon {
+    right: 10px;
+    padding: 8px;
+  }
+  
+  .microphone-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .voice-icon-button {
+    padding: 6px;
+  }
+  
+  .voice-icon-button svg {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .character-name-container {
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dialogue-overlay {
+    padding: 0 0 2rem 0;
+  }
+  
+  .character-portrait {
+    right: 0.5rem;
+    top: -4rem;
+  }
+  
+  .character-image-large {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .dialogue-box {
+    margin: 0 0.25rem;
+    padding: 0.8rem;
+  }
+  
+  .main-content {
+    padding: 0.5rem;
+  }
+  
+  .microphone-icon {
+    right: 8px;
+    padding: 6px;
+  }
+  
+  .microphone-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .character-name-tag {
+    font-size: 1rem;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .dialogue-text {
+    font-size: 1rem;
+  }
+  
+  .voice-icon-button {
+    padding: 4px;
+  }
+  
+  .voice-icon-button svg {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .character-name-container {
+    gap: 0.6rem;
+  }
+}
